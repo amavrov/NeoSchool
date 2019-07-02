@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using NeoSchool.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NeoSchool.Models;
 
 namespace NeoSchool
 {
@@ -30,17 +31,39 @@ namespace NeoSchool
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                //This lambda determines whether user consent for non - essential cookies is needed for a given request.
+                 options.CheckConsentNeeded = context => true;
+                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             services.AddDbContext<NeoSchoolDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<NeoSchoolDbContext>();
+
+            //--------------THIS IS THE DEFAULT USER -------------------
+
+            //services.AddDefaultIdentity<IdentityUser>()
+            //    .AddDefaultUI(UIFramework.Bootstrap4)
+            //    .AddEntityFrameworkStores<NeoSchoolDbContext>();
+
+            services.AddIdentity<User, UserRole>()
+                    .AddEntityFrameworkStores<NeoSchoolDbContext>()
+                    .AddDefaultTokenProviders();
+
+
+            //// Custom User Registration Options
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 0;
+
+                options.User.RequireUniqueEmail = true;
+            });
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -48,6 +71,27 @@ namespace NeoSchool
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+             using (var serviceScope = app.ApplicationServices.CreateScope())
+               {
+                   using (var context = serviceScope.ServiceProvider.GetRequiredService<NeoSchoolDbContext>())
+                   {
+                       context.Database.EnsureCreated();
+
+                    if (!context.Roles.Any())
+                    {
+                        context.Roles.Add(new UserRole { Name = "Admin", NormalizedName = "ADMIN" });
+                        context.Roles.Add(new UserRole { Name = "Moderator", NormalizedName = "MODERATOR" });
+                        context.Roles.Add(new UserRole { Name = "SuperUser", NormalizedName = "SUPERUSER" });
+                        context.Roles.Add(new UserRole { Name = "User", NormalizedName = "USER" });
+                    }
+
+                    context.SaveChanges();
+                   }
+               }
+
+               
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -65,6 +109,8 @@ namespace NeoSchool
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+            
+            //app.UseMvcWithDefaultRoute();
 
             app.UseMvc(routes =>
             {

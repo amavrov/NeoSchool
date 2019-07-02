@@ -9,6 +9,7 @@ namespace NeoSchool.Models
     {
         public User()
         {
+            
         }
 
     }
