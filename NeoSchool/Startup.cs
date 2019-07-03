@@ -32,8 +32,8 @@ namespace NeoSchool
             services.Configure<CookiePolicyOptions>(options =>
             {
                 //This lambda determines whether user consent for non - essential cookies is needed for a given request.
-                 options.CheckConsentNeeded = context => true;
-                 options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             services.AddDbContext<NeoSchoolDbContext>(options =>
@@ -72,11 +72,11 @@ namespace NeoSchool
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
 
-             using (var serviceScope = app.ApplicationServices.CreateScope())
-               {
-                   using (var context = serviceScope.ServiceProvider.GetRequiredService<NeoSchoolDbContext>())
-                   {
-                       context.Database.EnsureCreated();
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetRequiredService<NeoSchoolDbContext>())
+                {
+                    context.Database.EnsureCreated();
 
                     if (!context.Roles.Any())
                     {
@@ -87,10 +87,10 @@ namespace NeoSchool
                     }
 
                     context.SaveChanges();
-                   }
-               }
+                }
+            }
 
-               
+
 
             if (env.IsDevelopment())
             {
@@ -109,8 +109,9 @@ namespace NeoSchool
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-            
-            //app.UseMvcWithDefaultRoute();
+
+            app.UseMvcWithDefaultRoute();
+
 
             app.UseMvc(routes =>
             {

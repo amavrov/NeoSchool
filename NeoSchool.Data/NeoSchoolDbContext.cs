@@ -9,19 +9,29 @@ namespace NeoSchool.Data
 {
     public class NeoSchoolDbContext : IdentityDbContext<User, UserRole, string>
     {
-        public NeoSchoolDbContext(DbContextOptions<NeoSchoolDbContext> options)
-            : base(options)
+        public DbSet<VideoLesson> VideoLessons { get; set; }
+
+        public DbSet<Material> Materials { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Discipline> Disciplines { get; set; }
+
+        public NeoSchoolDbContext(DbContextOptions<NeoSchoolDbContext> options) : base(options)
         {
         }
 
         public NeoSchoolDbContext()
         {
+
         }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
         }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<User>()
