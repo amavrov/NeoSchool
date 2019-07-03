@@ -39,3 +39,5 @@
 /NeoSchool.Models/obj/NeoSchool.Models.csproj.nuget.g.props
 /NeoSchool.Models/obj/NeoSchool.Models.csproj.nuget.g.targets
 /NeoSchool.Models/obj/project.assets.json
+/NeoSchool/appsettings.Development.json
+/NeoSchool/appsettings.json
