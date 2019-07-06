@@ -31,7 +31,7 @@ namespace NeoSchool.Controllers
 
         public IActionResult Login()
         {
-            return this.View();
+            return this.View("_LoginPartial.cshtml");
         }
 
         public IActionResult Register()
