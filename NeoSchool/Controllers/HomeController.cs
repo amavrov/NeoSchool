@@ -19,6 +19,10 @@ namespace NeoSchool.Controllers
         //    this.context = context;
         //}
 
+
+            // public async Task<IActionResult> -- for new async methods
+
+
         public IActionResult Index()
         {
             return this.View();

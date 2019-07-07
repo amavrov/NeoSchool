@@ -16,7 +16,7 @@ namespace NeoSchool.Models
 
         }
 
-        public bool IsTeacher { get; set; } = false;
+        public bool IsTeacher { get; set; }
 
 
         public HashSet<VideoLesson> UploadedVideos { get; set; }
