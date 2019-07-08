@@ -14,6 +14,7 @@ using NeoSchool.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NeoSchool.Models;
+using NeoSchool.Services;
 
 namespace NeoSchool
 {
@@ -49,6 +50,7 @@ namespace NeoSchool
             services.AddIdentity<User, UserRole>()
                     .AddEntityFrameworkStores<NeoSchoolDbContext>()
                     .AddDefaultTokenProviders();
+            services.AddTransient<IVideoLessonService, VideoLessonService>();
 
 
             //// Custom User Registration Options
@@ -63,7 +65,6 @@ namespace NeoSchool
 
                 options.User.RequireUniqueEmail = true;
             });
-
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
