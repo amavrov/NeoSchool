@@ -37,11 +37,14 @@ namespace NeoSchool.Controllers
 
         }
 
-        public async Task<IActionResult> ViewAll()
+        public IActionResult ViewAll()
         {
-            //var allVideos =
+            return this.View();
+        }
 
-            return null;
+        public IActionResult VideoDetails(VideoLessonViewModel model)
+        {
+            return this.View(model);
         }
 
     }
