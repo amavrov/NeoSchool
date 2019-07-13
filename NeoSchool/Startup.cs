@@ -50,7 +50,10 @@ namespace NeoSchool
             services.AddIdentity<User, UserRole>()
                     .AddEntityFrameworkStores<NeoSchoolDbContext>()
                     .AddDefaultTokenProviders();
+
             services.AddTransient<IVideoLessonService, VideoLessonService>();
+            services.AddTransient<IMaterialService, MaterialService>();
+
 
 
             //// Custom User Registration Options
