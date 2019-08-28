@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NeoSchool.Models;
 using NeoSchool.Services;
@@ -17,12 +18,14 @@ namespace NeoSchool.Controllers
             this.service = service;
         }
 
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         public IActionResult Create(VideoLessonInputModel model)
         {
@@ -37,14 +40,18 @@ namespace NeoSchool.Controllers
 
         }
 
+        [Authorize]
         public IActionResult ViewAll()
         {
             return this.View();
         }
 
-        public IActionResult VideoDetails(VideoLessonViewModel model)
+        [Authorize]
+        public IActionResult VideoDetails(int videoId)
         {
-            return this.View(model);
+            int vidId = int.Parse(this.Request.Path.ToString().Split('/').LastOrDefault());
+            VideoLessonViewModel video = service.Details(vidId);
+            return this.View(video);
         }
 
     }

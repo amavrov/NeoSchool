@@ -4,69 +4,49 @@
 @{
     ViewData["Title"] = "ViewAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var AllVideos = service.GetAllVideos();
 }
 
-<h1>ViewAll</h1>
+<h1 class="d-flex justify-content-around row">Video Lessons</h1>
+<hr class="alert-primary" style="height:1px" />
 
-@foreach (var vid in service.GetAllVideos())
-{
-    <div>
-        <h4>VideoLessonViewModel</h4>
+<div id="videos" class="mt-3">
+    @for (int i = 0; i < AllVideos.Count; i += 3)
+    {
+        <div class="products-row row d-flex justify-content-around my-5">
+            @for (int j = i; j < i + 3; j++)
+            {
+                if (j < AllVideos.Count)
+                {
+                    var videoUrl = service.GetEmbeddingUrl(AllVideos[j].Url);
+
+                    <div id="video-box" class="video col-md-4">
+                        <div id="video-name" class="text-center">
+                            <a href="/VideoLesson/VideoDetails/@AllVideos[j].Id">@AllVideos[j].Name</a>
+                        </div>
+                        <hr />
+
+                        <div id="video-frame" class="d-flex justify-content-center" style="padding-bottom:56.25%; position:relative; display:block; width: 100%">
+                            <iframe src="@videoUrl" width="100%" height="100%" style="position:absolute; top:0; left: 0"
+                                    frameborder="1"
+                                    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+                        <div id ="description-text" class="m-4"> 
+                            <a href="/VideoLesson/VideoDetails/@AllVideos[j].Id" class="text-justify text-secondary">@service.GetShortDescription(AllVideos[j].Description)</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="product col-md-4 empty">
+                    </div>
+                }
+            }
+        </div>
         <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Id)
-                @vid.Id
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Id)
-                @vid.Id
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Name)
-                @vid.Name
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Name)
-                @vid.Name
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Description)
-                @vid.Description
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Description)
-                @vid.Description
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Url)
-                @vid.Url
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Url)
-                @vid.Url
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Rating)
-                @vid.Rating
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Rating)
-                @vid.Rating
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ForTeachers)
-                @vid.ForTeachers
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ForTeachers)
-                @vid.ForTeachers
-            </dd>
-        </dl>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    }
 </div>
+
+
+

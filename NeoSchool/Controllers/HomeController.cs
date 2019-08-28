@@ -11,17 +11,7 @@ namespace NeoSchool.Controllers
 {
     public class HomeController : Controller
     {
-
-        //private readonly NeoSchoolDbContext context;
-
-        //public HomeController(NeoSchoolDbContext context)
-        //{
-        //    this.context = context;
-        //}
-
-
-            // public async Task<IActionResult> -- for new async methods
-
+       // public async Task<IActionResult> -- for new async methods
 
         public IActionResult Index()
         {

@@ -14,9 +14,14 @@ namespace NeoSchool.Services
 
         string Delete(string VideoId);
 
-        string GetVideoId();
+        VideoLessonViewModel GetVideoById(string videoId);
+
+        string GetEmbeddingUrl(string url);
+
 
         VideoLessonViewModel Details(int videoId);
+
+        string GetShortDescription(string fullDescription);
         
     }
 }

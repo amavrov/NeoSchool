@@ -5,9 +5,6 @@
     <ul class="navbar-nav">
         @if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
         {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="Material" asp-action="Create" title="Create Material">Create Material</a>
-            </li>
             <li class="nav-item; dropdown">
                 <a href="#" class="dropdown-toggle; nav-link text-dark" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Videos<span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -16,7 +13,6 @@
 
                 </ul>
             </li>
-
             <li class="nav-item; dropdown">
                 <a href="#" class="dropdown-toggle; nav-link text-dark" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Materials<span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -25,7 +21,6 @@
 
                 </ul>
             </li>
-
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
             </li>
@@ -38,19 +33,13 @@
         else if (SignInManager.IsSignedIn(User))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="VideoLesson" asp-action="Create" title="Create Video Lesson">Create Video Lesson</a>
+                <a class="nav-link text-dark" asp-controller="VideoLesson" asp-action="ViewAll" title="View All Video Lessons">View all video lessons</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="Material" asp-action="Create" title="Create Material">Create Material</a>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Products <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><a asp-controller="Products" asp-action="Cloud">Cloud</a></li>
-                </ul>
+                <a class="nav-link text-dark" asp-controller="Material" asp-action="ViewAll" title="View All materials">View all materials</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">*Profile</a>
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
             </li>
             <li class="nav-item">
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

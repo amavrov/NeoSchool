@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NeoSchool.Data;
 using NeoSchool.Models;
@@ -22,7 +23,7 @@ namespace NeoSchool.Services
             throw new NotImplementedException();
         }
 
-        public string GetVideoId()
+        public VideoLessonViewModel GetVideoById(string videoId)
         {
             throw new NotImplementedException();
         }
@@ -97,8 +98,30 @@ namespace NeoSchool.Services
             return videoList;
         }
 
+        public string GetEmbeddingUrl(string url)
+        {
+            var splittedUrl = url.Split('=', '&');
+            var youTubeId = splittedUrl[1];
+            string finalUrl = "https:" + "//youtube.com/embed/" + youTubeId;
+            return finalUrl;
+        }
 
+        public string GetShortDescription(string fullDescription)
+        {
+            string shortDescription;
 
+            if (fullDescription.Length > 52)
+            {
+                 shortDescription = fullDescription.Substring(0, 52) + "... Read more";
+            }
+            else
+            {
+                 shortDescription = fullDescription + "... Read more";
+
+            }
+
+            return shortDescription;
+        }
     }
 
 }

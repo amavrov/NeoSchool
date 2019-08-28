@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NeoSchool.Models;
 using NeoSchool.Services;
+using AutoMapper;
 
 namespace NeoSchool
 {
@@ -51,6 +52,8 @@ namespace NeoSchool
                     .AddEntityFrameworkStores<NeoSchoolDbContext>()
                     .AddDefaultTokenProviders();
 
+            //services.AddAutoMapper();
+
             services.AddTransient<IVideoLessonService, VideoLessonService>();
             services.AddTransient<IMaterialService, MaterialService>();
 
@@ -80,7 +83,7 @@ namespace NeoSchool
             {
                 using (var context = serviceScope.ServiceProvider.GetRequiredService<NeoSchoolDbContext>())
                 {
-                    context.Database.EnsureCreated();
+                   // context.Database.Migrate();
 
                     if (!context.Roles.Any())
                     {
