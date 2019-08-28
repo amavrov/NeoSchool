@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NeoSchool.Data;
 using NeoSchool.Models;
@@ -12,10 +15,14 @@ namespace NeoSchool.Services
     public class VideoLessonService : IVideoLessonService
     {
         private readonly NeoSchoolDbContext db;
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IUserService userService;
 
-        public VideoLessonService(NeoSchoolDbContext db)
+        public VideoLessonService(NeoSchoolDbContext db, IHttpContextAccessor httpContextAccessor, IUserService userService)
         {
             this.db = db;
+            this.httpContextAccessor = httpContextAccessor;
+            this.userService = userService;
         }
 
         public string Delete(string VideoId)
@@ -31,10 +38,11 @@ namespace NeoSchool.Services
         public string Create(VideoLessonInputModel model)
         {
             //TODO: Validate model
+            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             VideoLesson video = new VideoLesson()
             {
-                Author = model.Author,
+                AuthorId = userId,
                 Description = model.Description,
                 Disciplines = model.Disciplines,
                 ForTeachers = model.ForTeachers,
@@ -42,6 +50,7 @@ namespace NeoSchool.Services
                 Url = model.Url,
                 Rating = 0,
                 Comments = new HashSet<Comment>()
+                
             };
 
             db.VideoLessons.Add(video);
@@ -69,14 +78,13 @@ namespace NeoSchool.Services
                 Rating = videoLesson.Rating,
                 Url = videoLesson.Url
             };
+            
 
             return video;
         }
 
         public List<VideoLessonViewModel> GetAllVideos()
         {
-
-            // TODO: add pagination
 
             var videoList = db.VideoLessons
                 .Include(author => author.Author)

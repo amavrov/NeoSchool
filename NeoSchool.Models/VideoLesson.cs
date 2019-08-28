@@ -24,6 +24,8 @@ namespace NeoSchool.Models
 
         public bool ForTeachers { get; set; }
 
+        public string AuthorId { get; set; }
+
         public User Author { get; set; }
 
         public HashSet<Comment> Comments { get; set; }

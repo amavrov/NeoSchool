@@ -6,7 +6,7 @@
         @if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
         {
             <li class="nav-item; dropdown">
-                <a href="#" class="dropdown-toggle; nav-link text-dark" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Videos<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle; nav-link text-light" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Videos<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li class="nav-item"><a class="nav-link text-dark" asp-controller="VideoLesson" asp-action="Create" title="Create Video Lesson">Create Video Lesson</a></li>
                     <li class="nav-item"><a class="nav-link text-dark" asp-controller="VideoLesson" asp-action="ViewAll" title="View All Videos">View All Video Lessons</a></li>
@@ -14,7 +14,7 @@
                 </ul>
             </li>
             <li class="nav-item; dropdown">
-                <a href="#" class="dropdown-toggle; nav-link text-dark" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Materials<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle; nav-link text-light" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Materials<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li class="nav-item"><a class="nav-link text-dark" asp-controller="Material" asp-action="Create" title="Create Video Lesson">Create Material</a></li>
                     <li class="nav-item"><a class="nav-link text-dark" asp-controller="Material" asp-action="ViewAll" title="View All Videos">View All Materials</a></li>
@@ -22,38 +22,38 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
+                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
             </li>
             <li class="nav-item">
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                    <button type="submit" class="nav-link btn btn-link text-light">Logout</button>
                 </form>
             </li>
         }
         else if (SignInManager.IsSignedIn(User))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="VideoLesson" asp-action="ViewAll" title="View All Video Lessons">View all video lessons</a>
+                <a class="nav-link text-light" asp-controller="VideoLesson" asp-action="ViewAll" title="View All Video Lessons">View all video lessons</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="Material" asp-action="ViewAll" title="View All materials">View all materials</a>
+                <a class="nav-link text-light" asp-controller="Material" asp-action="ViewAll" title="View All materials">View all materials</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
+                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
             </li>
             <li class="nav-item">
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                    <button type="submit" class="nav-link btn btn-link text-light">Logout</button>
                 </form>
             </li>
         }
         else
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
             </li>
         }
     </ul>

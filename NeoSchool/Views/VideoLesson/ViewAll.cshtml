@@ -20,22 +20,25 @@
                 {
                     var videoUrl = service.GetEmbeddingUrl(AllVideos[j].Url);
 
-                    <div id="video-box" class="video col-md-4">
-                        <div id="video-name" class="text-center">
-                            <a href="/VideoLesson/VideoDetails/@AllVideos[j].Id">@AllVideos[j].Name</a>
-                        </div>
-                        <hr />
+            <div id="video-box" class="video col-md-4">
+                <div id="video-name" class="text-center">
+                    <a href="/VideoLesson/VideoDetails/@AllVideos[j].Id">@AllVideos[j].Name</a>
+                </div>
+                <hr />
 
-                        <div id="video-frame" class="d-flex justify-content-center" style="padding-bottom:56.25%; position:relative; display:block; width: 100%">
-                            <iframe src="@videoUrl" width="100%" height="100%" style="position:absolute; top:0; left: 0"
-                                    frameborder="1"
-                                    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
+                <div id="video-frame" class="d-flex justify-content-center" style="padding-bottom:56.25%; position:relative; display:block; width: 100%">
+                    <iframe src="@videoUrl" width="100%" height="100%" style="position:absolute; top:0; left: 0"
+                            frameborder="1"
+                            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
 
-                        <div id ="description-text" class="m-4"> 
-                            <a href="/VideoLesson/VideoDetails/@AllVideos[j].Id" class="text-justify text-secondary">@service.GetShortDescription(AllVideos[j].Description)</a>
-                        </div>
-                    </div>
+                <div id="description-text" class="m-4">
+                    <a href="/VideoLesson/VideoDetails/@AllVideos[j].Id" class="text-justify text-secondary">@service.GetShortDescription(AllVideos[j].Description)</a>
+                </div>
+                <div id="description-text" class="m-4">
+                    <p>@Model.Author.UserName</p>
+                </div>
+            </div>
                 }
                 else
                 {

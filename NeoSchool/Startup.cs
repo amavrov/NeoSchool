@@ -56,7 +56,7 @@ namespace NeoSchool
 
             services.AddTransient<IVideoLessonService, VideoLessonService>();
             services.AddTransient<IMaterialService, MaterialService>();
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 
             //// Custom User Registration Options
