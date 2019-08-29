@@ -5,6 +5,8 @@
 @{
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["VideoId"] = Model.Id;
+
 }
 
 <div>
@@ -24,14 +26,14 @@
             <p class="tab-content">@Model.Description</p>
         </div>
 
-        @Model.Rating
+
 
         @if (Model.ForTeachers)
         {
             <p>This Video is made for the help of teachers!</p>
         }
 
-        @await Html.PartialAsync("_CommentPartial", new CommentInputModel { VideoLessonId = Model.Id });
+        @await Html.PartialAsync("_CommentPartial", new CommentInputModel());
 
     </div>
 </div>

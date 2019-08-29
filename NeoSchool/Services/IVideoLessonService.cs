@@ -22,6 +22,9 @@ namespace NeoSchool.Services
         VideoLessonViewModel Details(int videoId);
 
         string GetShortDescription(string fullDescription);
-        
+
+        string CommentVideo(CommentInputModel model);
+
+
     }
 }
