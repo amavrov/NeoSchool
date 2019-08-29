@@ -9,7 +9,7 @@ namespace NeoSchool.Models
     {
         public VideoLesson()
         {
-            this.Comments = new HashSet<VideoLessonComment>();
+            this.VideoLessonComments = new HashSet<VideoLessonComment>();
             this.Disciplines = new HashSet<Discipline>();
         }
         public int Id { get; set; }
@@ -28,7 +28,7 @@ namespace NeoSchool.Models
 
         public User Author { get; set; }
 
-        public HashSet<VideoLessonComment> Comments { get; set; }
+        public HashSet<VideoLessonComment> VideoLessonComments { get; set; }
 
         public HashSet<Discipline> Disciplines { get; set; }
 

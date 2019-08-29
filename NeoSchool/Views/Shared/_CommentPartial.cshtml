@@ -1,14 +1,14 @@
 ﻿@model NeoSchool.Models.CommentInputModel
 
-    <h4>Let us know what you think!</h4>
+<h4 class="mt-4">Let us know what you think!</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="CommentCurrentVideo">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Text" class="control-label"></label>
-                <input asp-for="Text" class="form-control" />
+                <label asp-for="Text" class="control-label">Write your comment:</label>
+                <textarea asp-for="Text" class="form-control w-100" > </textarea>
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
             <div class="row">

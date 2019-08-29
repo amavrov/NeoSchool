@@ -47,7 +47,7 @@ namespace NeoSchool.Services
                 Name = model.Name,
                 Url = model.Url,
                 Rating = 0,
-                Comments = new HashSet<VideoLessonComment>()
+                VideoLessonComments = new HashSet<VideoLessonComment>()
 
             };
 
@@ -79,10 +79,25 @@ namespace NeoSchool.Services
 
         public VideoLessonViewModel Details(int videoId)
         {
+            var commentsFromDb = this.db.VideoLessonComments.Where(x => x.VideoLessonId == videoId).ToHashSet();
+
             VideoLesson videoLesson = this.db.VideoLessons
                                               .Where(DbVideo => DbVideo.Id == videoId)
                                               .Include(DbVideo => DbVideo.Author)
                                               .SingleOrDefault();
+
+            var comments = new HashSet<CommentViewModel>();
+
+            foreach (var comm in commentsFromDb)
+            {
+                CommentViewModel commView = new CommentViewModel
+                {
+                    Author = comm.Author,
+                    Text = comm.Text,
+                    VideoLessonId = comm.VideoLessonId
+                };
+                comments.Add(commView);
+            }
 
             VideoLessonViewModel video = new VideoLessonViewModel
             {
@@ -93,7 +108,9 @@ namespace NeoSchool.Services
                 Id = videoLesson.Id,
                 Name = videoLesson.Name,
                 Rating = videoLesson.Rating,
-                Url = videoLesson.Url
+                Url = videoLesson.Url,
+                Comments = comments
+
             };
 
 

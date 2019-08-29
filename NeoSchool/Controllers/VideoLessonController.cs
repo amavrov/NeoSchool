@@ -45,7 +45,7 @@ namespace NeoSchool.Controllers
         {
             service.CommentVideo(comment);
 
-            return Redirect("/VideoLesson/Details/" + comment.VideoLessonId.ToString());
+            return Redirect("/VideoLesson/VideoDetails/" + comment.VideoLessonId.ToString());
         }
 
 

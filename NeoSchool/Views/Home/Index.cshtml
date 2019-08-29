@@ -8,10 +8,34 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <div>
-        <h1>Hello @User.Identity.Name!</h1>
+        <h1 class="text-center">Hello, @User.Identity.Name!</h1>
+    </div>
+    <div class="text-center">
+        <h2 class="display-4">Welcome to Neo School!</h2>
+        <p> We are a platform dedicated to helping teachers worldwide!</p>
+    </div>
+    <div>
+        <h2 class="mt-lg-5">Let's get you started on the platform:</h2>
+        <hr />
+    </div>
+    <div class="d-flex justify-content-around">
+        <div class="col-4" style="text-align:center">
+            <p style="margin:auto">You can view all of our user's videos:</p>
+            <br />
+            <a style="margin:auto" href="/VideoLesson/ViewAll" class="align-content-center"><img src="~/images/camera.jpg" /></a>
+        </div>
+
+        <div class="col-4" style="text-align:center" >
+            <p style="margin:auto">Or you can browse the uploaded materials:</p>
+            <br />
+            <a style="margin:auto" href="/Material/ViewAll"><img src="~/images/books.jpg"/></a>
+        </div>
     </div>
 }
-<div class="text-center">
-    <h2 class="display-4">Welcome to Neo School!</h2>
-    <p> We are a platform dedicated to helping teachers worldwide!</p>
-</div>
+else
+{
+    <div class="text-center">
+        <h2 class="display-4">Welcome to Neo School!</h2>
+        <p> We are a platform dedicated to helping teachers worldwide!</p>
+    </div>
+}
