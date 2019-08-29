@@ -10,7 +10,7 @@ namespace NeoSchool.Models
         public Material()
         {
             this.Disciplines = new HashSet<Discipline>();
-         //   this.Comments = new HashSet<Comment>();
+            this.MaterialComments = new HashSet<MaterialComment>();
         }
 
         public int Id { get; set; }
@@ -25,11 +25,15 @@ namespace NeoSchool.Models
 
         public bool ForTeachers { get; set; }
 
+        public string AuthorId { get; set; }
+
         public User Author { get; set; }
+
+        public string FileLink { get; set; }
 
         public HashSet<Discipline> Disciplines { get; set; }
 
-        //public HashSet<Comment> Comments { get; set; }
+        public HashSet<MaterialComment> MaterialComments { get; set; }
 
     }
 }

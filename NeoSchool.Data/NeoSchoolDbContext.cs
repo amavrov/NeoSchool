@@ -17,6 +17,9 @@ namespace NeoSchool.Data
 
         public DbSet<Discipline> Disciplines { get; set; }
 
+        public DbSet<MaterialComment> MaterialComments { get; set; }
+
+
         public NeoSchoolDbContext(DbContextOptions<NeoSchoolDbContext> options) : base(options)
         {
         }

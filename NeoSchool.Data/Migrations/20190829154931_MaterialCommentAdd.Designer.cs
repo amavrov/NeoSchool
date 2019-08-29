@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NeoSchool.Data;
 
 namespace NeoSchool.Data.Migrations
 {
     [DbContext(typeof(NeoSchoolDbContext))]
-    partial class NeoSchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190829154931_MaterialCommentAdd")]
+    partial class MaterialCommentAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,7 +176,7 @@ namespace NeoSchool.Data.Migrations
 
                     b.HasIndex("MaterialId");
 
-                    b.ToTable("MaterialComments");
+                    b.ToTable("MaterialComment");
                 });
 
             modelBuilder.Entity("NeoSchool.Models.User", b =>
