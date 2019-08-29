@@ -31,7 +31,8 @@
             <p>This Video is made for the help of teachers!</p>
         }
 
-        <hr />
+        @await Html.PartialAsync("_CommentPartial", new CommentInputModel { VideoLessonId = Model.Id });
+
     </div>
 </div>
 

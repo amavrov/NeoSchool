@@ -33,12 +33,21 @@ namespace NeoSchool.Controllers
             {
                 return this.View(model ?? new VideoLessonInputModel());
             }
+            
 
             service.Create(model);            
 
-            return this.Redirect("/");
+            return this.Redirect("/VideoLesson/ViewAll");
 
         }
+
+        public IActionResult CommentCurrentVideo(CommentInputModel comment)
+        {
+
+
+            return Redirect("/VideoLesson/Details" + comment.VideoLessonId.ToString());
+        }
+
 
         [Authorize]
         public IActionResult ViewAll()

@@ -12,7 +12,7 @@ namespace NeoSchool.Models
         {
             this.UploadedVideos = new HashSet<VideoLesson>();
             this.UploadedMaterials = new HashSet<Material>();
-            this.Comments = new HashSet<Comment>();
+            this.Comments = new HashSet<VideoLessonComment>();
 
         }
 
@@ -24,7 +24,7 @@ namespace NeoSchool.Models
 
         public HashSet<Material> UploadedMaterials { get; set; }
 
-        public HashSet<Comment> Comments { get; set; }
+        public HashSet<VideoLessonComment> Comments { get; set; }
 
 
 

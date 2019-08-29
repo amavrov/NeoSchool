@@ -56,6 +56,7 @@ namespace NeoSchool
 
             services.AddTransient<IVideoLessonService, VideoLessonService>();
             services.AddTransient<IMaterialService, MaterialService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 
@@ -83,7 +84,7 @@ namespace NeoSchool
             {
                 using (var context = serviceScope.ServiceProvider.GetRequiredService<NeoSchoolDbContext>())
                 {
-                   // context.Database.Migrate();
+                    context.Database.Migrate();
 
                     if (!context.Roles.Any())
                     {
@@ -92,6 +93,8 @@ namespace NeoSchool
                         context.Roles.Add(new UserRole { Name = "SuperUser", NormalizedName = "SUPERUSER" });
                         context.Roles.Add(new UserRole { Name = "User", NormalizedName = "USER" });
                     }
+
+
 
                     context.SaveChanges();
                 }
@@ -122,6 +125,10 @@ namespace NeoSchool
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                     name: "areas",
+                        template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

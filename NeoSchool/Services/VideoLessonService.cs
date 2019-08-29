@@ -16,13 +16,11 @@ namespace NeoSchool.Services
     {
         private readonly NeoSchoolDbContext db;
         private readonly IHttpContextAccessor httpContextAccessor;
-        private readonly IUserService userService;
 
-        public VideoLessonService(NeoSchoolDbContext db, IHttpContextAccessor httpContextAccessor, IUserService userService)
+        public VideoLessonService(NeoSchoolDbContext db, IHttpContextAccessor httpContextAccessor)
         {
             this.db = db;
             this.httpContextAccessor = httpContextAccessor;
-            this.userService = userService;
         }
 
         public string Delete(string VideoId)
@@ -49,14 +47,33 @@ namespace NeoSchool.Services
                 Name = model.Name,
                 Url = model.Url,
                 Rating = 0,
-                Comments = new HashSet<Comment>()
-                
+                Comments = new HashSet<VideoLessonComment>()
+
             };
 
             db.VideoLessons.Add(video);
             db.SaveChanges();
 
             var result = $"You have successfully added the video {model.Name}!";
+            return result;
+        }
+
+        public string CommentVideo(CommentInputModel model)
+        {
+            //TODO: Validate model
+            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            VideoLessonComment comment = new VideoLessonComment()
+            {
+                Text = model.Text,
+                AuthorId = userId,
+                VideoLessonId = model.VideoLessonId
+            };
+
+            db.VideoLessonComments.Add(comment);
+            db.SaveChanges();
+
+            var result = $"You have successfully made a comment!";
             return result;
         }
 
@@ -78,7 +95,7 @@ namespace NeoSchool.Services
                 Rating = videoLesson.Rating,
                 Url = videoLesson.Url
             };
-            
+
 
             return video;
         }
@@ -120,11 +137,11 @@ namespace NeoSchool.Services
 
             if (fullDescription.Length > 52)
             {
-                 shortDescription = fullDescription.Substring(0, 52) + "... Read more";
+                shortDescription = fullDescription.Substring(0, 52) + "... Read more";
             }
             else
             {
-                 shortDescription = fullDescription + "... Read more";
+                shortDescription = fullDescription + "... Read more";
 
             }
 

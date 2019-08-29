@@ -12,7 +12,6 @@ namespace NeoSchool.Models
         public MaterialViewModel()
         {
             this.Disciplines = new HashSet<Discipline>();
-            this.Comments = new HashSet<Comment>();
         }
 
         public int Id { get; set; }
@@ -31,7 +30,6 @@ namespace NeoSchool.Models
 
         public HashSet<Discipline> Disciplines { get; set; }
 
-        public HashSet<Comment> Comments { get; set; }
 
     }
 }

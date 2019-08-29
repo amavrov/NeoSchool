@@ -13,7 +13,7 @@ namespace NeoSchool.Data
 
         public DbSet<Material> Materials { get; set; }
 
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<VideoLessonComment> VideoLessonComments { get; set; }
 
         public DbSet<Discipline> Disciplines { get; set; }
 

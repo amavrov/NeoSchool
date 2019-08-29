@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -87,6 +88,16 @@ namespace NeoSchool.Areas.Identity.Pages.Account
 
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    if (_userManager.Users.Count() == 1)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Admin");
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
+
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)

@@ -31,7 +31,6 @@ namespace NeoSchool.Services
             Material material = new Material()
             {
                 Author = model.Author,
-                Comments = model.Comments,
                 Description = model.Description,
                 Disciplines = model.Disciplines,
                 ForTeachers = model.ForTeachers,

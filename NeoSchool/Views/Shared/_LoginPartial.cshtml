@@ -6,7 +6,7 @@
         @if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
         {
             <li class="nav-item; dropdown">
-                <a href="#" class="dropdown-toggle; nav-link text-light" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Videos<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle; nav-link text-light" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Videos<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li class="nav-item"><a class="nav-link text-dark" asp-controller="VideoLesson" asp-action="Create" title="Create Video Lesson">Create Video Lesson</a></li>
                     <li class="nav-item"><a class="nav-link text-dark" asp-controller="VideoLesson" asp-action="ViewAll" title="View All Videos">View All Video Lessons</a></li>
