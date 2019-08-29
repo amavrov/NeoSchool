@@ -32,6 +32,7 @@ namespace NeoSchool.Services
 
             using (var ms = new MemoryStream(destinationData))
             {
+                
                 ImageUploadParams uploadParams = new ImageUploadParams
                 {
                     Folder = "materials",

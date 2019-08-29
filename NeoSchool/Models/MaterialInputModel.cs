@@ -1,4 +1,5 @@
-﻿using NeoSchool.Models.Enums;
+﻿using Microsoft.AspNetCore.Http;
+using NeoSchool.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace NeoSchool.Models
         public string Description { get; set; }
 
         public bool ForTeachers { get; set; }
+
+        public IFormFile File { get; set; }
 
         public User Author { get; set; }
 

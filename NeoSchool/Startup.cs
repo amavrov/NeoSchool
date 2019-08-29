@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NeoSchool.Models;
 using NeoSchool.Services;
 using AutoMapper;
+using CloudinaryDotNet;
 
 namespace NeoSchool
 {
@@ -52,11 +53,20 @@ namespace NeoSchool
                     .AddEntityFrameworkStores<NeoSchoolDbContext>()
                     .AddDefaultTokenProviders();
 
-            //services.AddAutoMapper();
+            Account cloudinaryCredentials = new Account(
+                 this.Configuration["Cloudinary:CloudName"],
+                 this.Configuration["Cloudinary:ApiKey"],
+                 this.Configuration["Cloudinary:ApiSecret"]);
+
+            Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
+
+            services.AddSingleton(cloudinaryUtility);
 
             services.AddTransient<IVideoLessonService, VideoLessonService>();
             services.AddTransient<IMaterialService, MaterialService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 

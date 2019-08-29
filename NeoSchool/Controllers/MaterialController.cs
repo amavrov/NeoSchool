@@ -12,10 +12,12 @@ namespace NeoSchool.Controllers
     public class MaterialController : Controller
     {
         private readonly IMaterialService service;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public MaterialController(IMaterialService service)
+        public MaterialController(IMaterialService service, ICloudinaryService cloudinaryService)
         {
             this.service = service;
+            this.cloudinaryService = cloudinaryService;
         }
 
         [Authorize(Roles = "Admin, Moderator")]
@@ -39,7 +41,25 @@ namespace NeoSchool.Controllers
             return this.Redirect("/");
 
         }
+        //
 
+        [HttpPost]
+        public async Task<IActionResult> Create(MaterialInputModel model)
+        {
+
+            string pictureUrl = await this.cloudinaryService.UploadFileAsync(
+                model.File,
+                model.Name);
+
+            ProductServiceModel productServiceModel = AutoMapper.Mapper.Map<ProductServiceModel>(productCreateInputModel);
+
+            productServiceModel.Picture = pictureUrl;
+
+            await this.productService.Create(productServiceModel);
+
+            return this.Redirect("/");
+        }
+        //
         [Authorize]
         public IActionResult ViewAll()
         {
