@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using NeoSchool.Models.Enums;
+using NeoSchool.Services.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NeoSchool.Models
 {
-    public class MaterialInputModel
+    public class MaterialInputModel : IMapTo<Material>
     {
         public MaterialInputModel()
         {
@@ -15,7 +15,7 @@ namespace NeoSchool.Models
         }
 
 
-        public MaterialType Type { get; set; }
+        public string Type { get; set; }
 
         public string Name { get; set; }
 

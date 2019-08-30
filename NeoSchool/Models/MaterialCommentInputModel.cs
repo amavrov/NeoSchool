@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NeoSchool.Models
 {
-    public class CommentViewModel : IMapFrom<VideoLessonComment>
+    public class MaterialCommentInputModel : IMapTo<MaterialComment>
     {
         public long Id { get; set; }
 
@@ -16,8 +16,8 @@ namespace NeoSchool.Models
 
         public User Author { get; set; }
 
-        public int VideoLessonId { get; set; }
+        public int MaterialId { get; set; }
 
-        public VideoLessonInputModel VideoLesson { get; set; }
+        public MaterialInputModel Material { get; set; }
     }
 }

@@ -29,36 +29,36 @@ namespace NeoSchool.Controllers
 
         [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
-        public IActionResult Create(MaterialInputModel model)
+        public async Task<IActionResult> Create(MaterialInputModel model)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View(model ?? new MaterialInputModel());
             }
 
-            service.Create(model);
+            await service.Create(model);
 
-            return this.Redirect("/");
+            return this.Redirect("/Material/ViewAll");
 
         }
         //
 
-        [HttpPost]
-        public async Task<IActionResult> Create(MaterialInputModel model)
-        {
+        //[HttpPost]
+        //public async Task<IActionResult> Create(MaterialInputModel model)
+        //{
 
-            string pictureUrl = await this.cloudinaryService.UploadFileAsync(
-                model.File,
-                model.Name);
+        //    string pictureUrl = await this.cloudinaryService.UploadFileAsync(
+        //        model.File,
+        //        model.Name);
 
-            ProductServiceModel productServiceModel = AutoMapper.Mapper.Map<ProductServiceModel>(productCreateInputModel);
+        //    ProductServiceModel productServiceModel = AutoMapper.Mapper.Map<ProductServiceModel>(productCreateInputModel);
 
-            productServiceModel.Picture = pictureUrl;
+        //    productServiceModel.Picture = pictureUrl;
 
-            await this.productService.Create(productServiceModel);
+        //    await this.productService.Create(productServiceModel);
 
-            return this.Redirect("/");
-        }
+        //    return this.Redirect("/");
+        //}
         //
         [Authorize]
         public IActionResult ViewAll()
@@ -67,9 +67,19 @@ namespace NeoSchool.Controllers
         }
 
         [Authorize]
-        public IActionResult VideoDetails(VideoLessonViewModel model)
+        public IActionResult MaterialDetails(int materialId)
         {
-            return this.View(model);
+            int matId = int.Parse(this.Request.Path.ToString().Split('/').LastOrDefault());
+            MaterialViewModel material = service.Details(matId);
+            return this.View(material);
+        }
+
+        public IActionResult CommentCurrentMaterial(MaterialCommentInputModel comment)
+        {
+            
+            service.CommentMaterial(comment);
+
+            return Redirect("/Material/MaterialDetails/" + comment.MaterialId.ToString());
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using NeoSchool.Models.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,7 +14,7 @@ namespace NeoSchool.Models
 
         public int Id { get; set; }
 
-        public MaterialType Type { get; set; }
+        public string Type { get; set; }
 
         public string Name { get; set; }
 

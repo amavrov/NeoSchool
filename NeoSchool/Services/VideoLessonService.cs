@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NeoSchool.Data;
 using NeoSchool.Models;
+using NeoSchool.Services.Mapping;
 
 namespace NeoSchool.Services
 {
@@ -36,20 +37,24 @@ namespace NeoSchool.Services
         public string Create(VideoLessonInputModel model)
         {
             //TODO: Validate model
+            VideoLesson video = Mapper.Map<VideoLesson>(model);
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            video.AuthorId = userId;
 
-            VideoLesson video = new VideoLesson()
-            {
-                AuthorId = userId,
-                Description = model.Description,
-                Disciplines = model.Disciplines,
-                ForTeachers = model.ForTeachers,
-                Name = model.Name,
-                Url = model.Url,
-                Rating = 0,
-                VideoLessonComments = new HashSet<VideoLessonComment>()
+            #region Old Manual Mapping
+            //VideoLesson video = new VideoLesson()
+            //{
+            //    AuthorId = userId,
+            //    Description = model.Description,
+            //    Disciplines = model.Disciplines,
+            //    ForTeachers = model.ForTeachers,
+            //    Name = model.Name,
+            //    Url = model.Url,
+            //    Rating = 0,
+            //    VideoLessonComments = new HashSet<VideoLessonComment>()
 
-            };
+            //};
+            #endregion
 
             db.VideoLessons.Add(video);
             db.SaveChanges();
@@ -119,23 +124,26 @@ namespace NeoSchool.Services
 
         public List<VideoLessonViewModel> GetAllVideos()
         {
+            var videoList = db.VideoLessons.To<VideoLessonViewModel>().ToList();
 
-            var videoList = db.VideoLessons
-                .Include(author => author.Author)
-                .ToList()
-                .Select(video =>
-                {
-                    return new VideoLessonViewModel
-                    {
-                        Id = video.Id,
-                        Author = video.Author,
-                        Description = video.Description,
-                        Disciplines = video.Disciplines,
-                        ForTeachers = video.ForTeachers,
-                        Name = video.Name,
-                        Url = video.Url
-                    };
-                }).ToList();
+            #region Old Manual Mapping
+            //var videoList = db.VideoLessons
+            //    .Include(author => author.Author)
+            //    .ToList()
+            //    .Select(video =>
+            //    {
+            //        return new VideoLessonViewModel
+            //        {
+            //            Id = video.Id,
+            //            Author = video.Author,
+            //            Description = video.Description,
+            //            Disciplines = video.Disciplines,
+            //            ForTeachers = video.ForTeachers,
+            //            Name = video.Name,
+            //            Url = video.Url
+            //        };
+            //    }).ToList();
+            #endregion
 
             return videoList;
         }

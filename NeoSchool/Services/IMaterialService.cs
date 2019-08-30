@@ -8,7 +8,7 @@ namespace NeoSchool.Services
 {
     public interface IMaterialService
     {
-        string Create(MaterialInputModel model);
+        Task<string> Create(MaterialInputModel model);
 
         List<MaterialViewModel> GetAllMaterials();
 
@@ -17,6 +17,9 @@ namespace NeoSchool.Services
         string GetMaterialId();
 
         MaterialViewModel Details(int materialId);
+
+        string GetShortDescription(string fullDescription);
+        string CommentMaterial(MaterialCommentInputModel model);
 
 
     }

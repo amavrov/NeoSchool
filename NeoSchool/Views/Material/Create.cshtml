@@ -1,4 +1,4 @@
-﻿@model NeoSchool.Models.Material
+﻿@model NeoSchool.Models.MaterialInputModel
 
 @{
     ViewData["Title"] = "View";
@@ -12,14 +12,8 @@
     <hr />
     <div class="col-6">
         <div>
-            <form asp-action="View">
+            <form asp-action="Create" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="form-group">
-                    <label asp-for="Type" class="control-label"></label>
-                    <input asp-for="Type" class="form-control" />
-                    <span asp-validation-for="Type" class="text-danger"></span>
-                </div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
                     <input asp-for="Name" class="form-control" />
@@ -30,15 +24,19 @@
                     <textarea asp-for="Description" class="form-control"> </textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Rating" class="control-label"></label>
-                    <input asp-for="Rating" class="form-control" />
-                    <span asp-validation-for="Rating" class="text-danger"></span>
-                </div>
                 <div class="form-group form-check">
                     <label class="form-check-label">
                         <input class="form-check-input" asp-for="ForTeachers" /> @Html.DisplayNameFor(model => model.ForTeachers)
                     </label>
+                </div>
+                <div class="form-group">
+                        <label asp-for="File">File</label>
+                        <input type="file"
+                           class="form-control"
+                           id="file"
+                           placeholder="File..."
+                           asp-for="File">
+                    <span asp-validation-for="File" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />

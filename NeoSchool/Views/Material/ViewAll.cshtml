@@ -4,61 +4,45 @@
 @{
     ViewData["Title"] = "ViewAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var AllMaterials = service.GetAllMaterials();
 }
 
-<h1>ViewAll</h1>
+<h1 class="d-flex justify-content-around row">Video Lessons</h1>
+<hr class="alert-primary" style="height:1px" />
 
-@foreach (var material in service.GetAllMaterials())
-{
-    <div>
-        <h4>VideoLessonViewModel</h4>
+<div id="videos" class="mt-3">
+    @for (int i = 0; i < AllMaterials.Count; i += 3)
+    {
+        <div class="products-row row d-flex justify-content-around my-5">
+            @for (int j = i; j < i + 3; j++)
+            {
+                if (j < AllMaterials.Count)
+                {
+                    
+            <div id="material-box" class="col-md-4 border">
+                <div id="material-name" class="text-center">
+                    <a  class="text-capitalize" href="/Material/MaterialDetails/@AllMaterials[j].Id">@AllMaterials[j].Name</a>
+                </div>
+                <hr />
+                <div id="material-url" class="m-4">
+                    <a href="@AllMaterials[j].FileLink" class="text-justify text-primary">Download this file</a>
+                </div>
+
+                <div id="description-text" class="m-4">
+                    <a href="/Material/MaterialDetails/@AllMaterials[j].Id" class="text-justify text-secondary">@service.GetShortDescription(AllMaterials[j].Description)</a>
+                </div>
+                <div id="description-text" class="m-4">
+                    <p>Author: @AllMaterials[j].Author.UserName</p>
+                </div>
+            </div>
+                }
+                else
+                {
+                    <div class="product col-md-4 empty">
+                    </div>
+                }
+            }
+        </div>
         <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Id)
-                @material.Id
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Id)
-                @material.Id
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Name)
-                @material.Name
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Name)
-                @material.Name
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Description)
-                @material.Description
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Description)
-                @material.Description
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Rating)
-                @material.Rating
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Rating)
-                @material.Rating
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ForTeachers)
-                @material.ForTeachers
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ForTeachers)
-                @material.ForTeachers
-            </dd>
-        </dl>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    }
 </div>

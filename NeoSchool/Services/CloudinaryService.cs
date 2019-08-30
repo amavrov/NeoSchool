@@ -21,7 +21,7 @@ namespace NeoSchool.Services
         public async Task<string> UploadFileAsync(IFormFile file, string fileName)
         {
             byte[] destinationData;
-
+            string ext = file.FileName.Split('.').Last().ToString();
             using (var ms = new MemoryStream())
             {
                 await file.CopyToAsync(ms);
@@ -32,18 +32,20 @@ namespace NeoSchool.Services
 
             using (var ms = new MemoryStream(destinationData))
             {
-                
-                ImageUploadParams uploadParams = new ImageUploadParams
+
+                RawUploadParams uploadParams = new RawUploadParams
                 {
                     Folder = "materials",
-                    File = new FileDescription(fileName, ms)
+                    File = new FileDescription(fileName, ms),
+                    PublicId = Guid.NewGuid().ToString() + "." +ext
+
                 };
 
-                uploadResult = this.cloudinaryUtility.Upload(uploadParams);
-            }
+            uploadResult = this.cloudinaryUtility.Upload(uploadParams);
+        }
 
             return uploadResult?.SecureUri.AbsoluteUri;
         }
-    }
+}
 }
 

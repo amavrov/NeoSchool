@@ -17,6 +17,7 @@ using NeoSchool.Models;
 using NeoSchool.Services;
 using AutoMapper;
 using CloudinaryDotNet;
+using NeoSchool.Services.Mapping;
 
 namespace NeoSchool
 {
@@ -89,6 +90,8 @@ namespace NeoSchool
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            AutoMapperConfig.RegisterMappings(typeof(VideoLesson).Assembly, typeof(VideoLessonViewModel).Assembly);
+
 
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {

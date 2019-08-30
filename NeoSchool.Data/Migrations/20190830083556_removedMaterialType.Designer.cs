@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NeoSchool.Data;
 
 namespace NeoSchool.Data.Migrations
 {
     [DbContext(typeof(NeoSchoolDbContext))]
-    partial class NeoSchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190830083556_removedMaterialType")]
+    partial class removedMaterialType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
