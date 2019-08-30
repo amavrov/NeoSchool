@@ -54,7 +54,7 @@ namespace NeoSchool.Controllers
                     var a = item.DisciplineName;
                     if (item.Grade == model.Grade && item.DisciplineName == model.DisciplineName)
                     {
-                        model.VideoIdsAndNames.Add(new KeyValuePair<string, string>($"{material.Id}", $"{material.Name}"));
+                        model.MaterialIdsAndNames.Add(new KeyValuePair<string, string>($"{material.Id}", $"{material.Name}"));
                     }
                 }
             }
