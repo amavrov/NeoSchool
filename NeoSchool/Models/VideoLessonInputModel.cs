@@ -9,10 +9,6 @@ namespace NeoSchool.Models
     public class VideoLessonInputModel : IMapTo<VideoLesson>
     {
 
-        public VideoLessonInputModel()
-        {
-            this.Disciplines = new HashSet<Discipline>();
-        }
 
         public string Name { get; set; }
 
@@ -24,7 +20,8 @@ namespace NeoSchool.Models
 
         public User Author { get; set; }
 
-        // TODO Add requred to Disciplines
-        public HashSet<Discipline> Disciplines { get; set; }
+        public string DisciplineName { get; set; }
+
+        public string Grade { get; set; }
     }
 }

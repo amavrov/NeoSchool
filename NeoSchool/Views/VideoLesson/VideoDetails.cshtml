@@ -31,6 +31,29 @@
         <div class="mt-5">
             <p class="tab-content">@Model.Description</p>
         </div>
+        <p class="h4 mt-5">Disciplines:</p>
+        <hr />
+
+        @if (Model.Disciplines.Count == 0)
+        {
+            <h3>This video is suitable for everyone!</h3>
+            <hr />
+        }
+        else
+        {
+            @foreach (var item in Model.Disciplines)
+            {
+                <p>@item.DisciplineName</p>
+                <br />
+            }
+            <p class="h4 mt-5">Grades:</p>
+            <hr />
+            @foreach (var item in Model.Disciplines)
+            {
+                <p>@item.Grade</p>
+                <br />
+            }
+        }
         <hr />
         <br />
         <h4>Join the chatter:</h4>

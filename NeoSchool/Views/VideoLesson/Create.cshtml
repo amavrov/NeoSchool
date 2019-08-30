@@ -29,6 +29,16 @@
                     <input asp-for="Url" class="form-control" />
                     <span asp-validation-for="Url" class="text-danger"></span>
                 </div>
+                <div class="form-group">
+                    <label asp-for="DisciplineName" class="control-label"></label>
+                    <input asp-for="DisciplineName" class="form-control" />
+                    <span asp-validation-for="DisciplineName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Grade" class="control-label"></label>
+                    <input asp-for="Grade" class="form-control" />
+                    <span asp-validation-for="Grade" class="text-danger"></span>
+                </div>
                 <div class="form-group form-check">
                     <label class="form-check-label">
                         <input class="form-check-input" asp-for="ForTeachers" /> @Html.DisplayNameFor(model => model.ForTeachers)

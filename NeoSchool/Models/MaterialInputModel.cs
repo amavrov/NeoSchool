@@ -9,11 +9,6 @@ namespace NeoSchool.Models
 {
     public class MaterialInputModel : IMapTo<Material>
     {
-        public MaterialInputModel()
-        {
-            this.Disciplines = new HashSet<Discipline>();
-        }
-
 
         public string Type { get; set; }
 
@@ -27,7 +22,10 @@ namespace NeoSchool.Models
 
         public User Author { get; set; }
 
-        public HashSet<Discipline> Disciplines { get; set; }
+        public string DisciplineName { get; set; }
+
+        public string Grade { get; set; }
+
 
 
 

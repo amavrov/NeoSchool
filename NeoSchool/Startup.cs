@@ -67,6 +67,9 @@ namespace NeoSchool
             services.AddTransient<IMaterialService, MaterialService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
+            services.AddTransient<IDisciplineService, DisciplineService>();
+
+
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -98,7 +101,7 @@ namespace NeoSchool
                 using (var context = serviceScope.ServiceProvider.GetRequiredService<NeoSchoolDbContext>())
                 {
                     context.Database.Migrate();
-
+                    #region Seeding
                     if (!context.Roles.Any())
                     {
                         context.Roles.Add(new UserRole { Name = "Admin", NormalizedName = "ADMIN" });
@@ -107,9 +110,8 @@ namespace NeoSchool
                         context.Roles.Add(new UserRole { Name = "User", NormalizedName = "USER" });
                     }
 
-
-
                     context.SaveChanges();
+                    #endregion
                 }
             }
 

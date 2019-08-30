@@ -17,11 +17,13 @@ namespace NeoSchool.Services
     {
         private readonly NeoSchoolDbContext db;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IDisciplineService disciplineService;
 
-        public VideoLessonService(NeoSchoolDbContext db, IHttpContextAccessor httpContextAccessor)
+        public VideoLessonService(NeoSchoolDbContext db, IHttpContextAccessor httpContextAccessor, IDisciplineService disciplineService)
         {
             this.db = db;
             this.httpContextAccessor = httpContextAccessor;
+            this.disciplineService = disciplineService;
         }
 
         public string Delete(string VideoId)
@@ -40,6 +42,12 @@ namespace NeoSchool.Services
             VideoLesson video = Mapper.Map<VideoLesson>(model);
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             video.AuthorId = userId;
+
+            if (model.DisciplineName != null && model.Grade != null)
+            {
+                var disc = disciplineService.CreateDiscipline(model.DisciplineName, model.Grade);
+                video.Disciplines.Add(disc);
+            }
 
             #region Old Manual Mapping
             //VideoLesson video = new VideoLesson()
@@ -67,12 +75,14 @@ namespace NeoSchool.Services
         {
             //TODO: Validate model
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            User author = db.Users.FirstOrDefault(x => x.Id == userId);
 
             VideoLessonComment comment = new VideoLessonComment()
             {
                 Text = model.Text,
                 AuthorId = userId,
-                VideoLessonId = model.VideoLessonId
+                VideoLessonId = model.VideoLessonId,
+                Author = author
             };
 
             db.VideoLessonComments.Add(comment);
@@ -84,11 +94,12 @@ namespace NeoSchool.Services
 
         public VideoLessonViewModel Details(int videoId)
         {
-            var commentsFromDb = this.db.VideoLessonComments.Where(x => x.VideoLessonId == videoId).ToHashSet();
+            var commentsFromDb = this.db.VideoLessonComments.Where(x => x.VideoLessonId == videoId).Include(x => x.Author).ToHashSet();
 
             VideoLesson videoLesson = this.db.VideoLessons
                                               .Where(DbVideo => DbVideo.Id == videoId)
                                               .Include(DbVideo => DbVideo.Author)
+                                              .Include(DbVideo => DbVideo.Disciplines)
                                               .SingleOrDefault();
 
             var comments = new HashSet<CommentViewModel>();

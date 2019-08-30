@@ -15,12 +15,14 @@ namespace NeoSchool.Services
         private readonly NeoSchoolDbContext db;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly ICloudinaryService cloudinaryService;
+        private readonly IDisciplineService disciplineService;
 
-        public MaterialService(NeoSchoolDbContext db, IHttpContextAccessor httpContextAccessor, ICloudinaryService cloudinaryService)
+        public MaterialService(NeoSchoolDbContext db, IHttpContextAccessor httpContextAccessor, ICloudinaryService cloudinaryService, IDisciplineService disciplineService)
         {
             this.db = db;
             this.httpContextAccessor = httpContextAccessor;
             this.cloudinaryService = cloudinaryService;
+            this.disciplineService = disciplineService;
         }
 
         public string Delete(string VideoId)
@@ -41,7 +43,6 @@ namespace NeoSchool.Services
             {
                 AuthorId = userId,
                 Description = model.Description,
-                Disciplines = model.Disciplines,
                 ForTeachers = model.ForTeachers,
                 Name = model.Name,
                 FileLink = fileUrl,
@@ -50,7 +51,12 @@ namespace NeoSchool.Services
 
             };
 
-            ;
+            if (model.DisciplineName != null && model.Grade != null)
+            {
+                var disc = disciplineService.CreateDiscipline(model.DisciplineName, model.Grade);
+                material.Disciplines.Add(disc);
+            }
+
             db.Materials.Add(material);
             db.SaveChanges();
 
@@ -63,8 +69,9 @@ namespace NeoSchool.Services
             Material materialFromDb = this.db.Materials
                                               .Where(mat => mat.Id == materialId)
                                               .Include(dbMat => dbMat.Author)
+                                              .Include(dbMat => dbMat.Disciplines)
                                               .SingleOrDefault();
-            var commentsFromDb = this.db.MaterialComments.Where(x => x.MaterialId == materialId).ToHashSet();
+            var commentsFromDb = this.db.MaterialComments.Where(x => x.MaterialId == materialId).Include(x => x.Author).ToHashSet();
 
             var comments = new HashSet<CommentViewModel>();
 
