@@ -46,7 +46,6 @@ namespace NeoSchool.Services
                 ForTeachers = model.ForTeachers,
                 Name = model.Name,
                 FileLink = fileUrl,
-                Type = type,
                 MaterialComments = new HashSet<MaterialComment>()
 
             };
@@ -94,7 +93,6 @@ namespace NeoSchool.Services
                 ForTeachers = materialFromDb.ForTeachers,
                 Id = materialFromDb.Id,
                 Name = materialFromDb.Name,
-                Rating = materialFromDb.Rating,
                 FileLink = materialFromDb.FileLink,
                 Comments = comments
 

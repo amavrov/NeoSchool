@@ -111,9 +111,12 @@ namespace NeoSchool.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DisciplineName");
+                    b.Property<string>("DisciplineName")
+                        .IsRequired()
+                        .HasMaxLength(20);
 
-                    b.Property<string>("Grade");
+                    b.Property<string>("Grade")
+                        .HasMaxLength(20);
 
                     b.Property<int?>("MaterialId");
 
@@ -136,17 +139,15 @@ namespace NeoSchool.Data.Migrations
 
                     b.Property<string>("AuthorId");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000);
 
                     b.Property<string>("FileLink");
 
                     b.Property<bool>("ForTeachers");
 
-                    b.Property<string>("Name");
-
-                    b.Property<int>("Rating");
-
-                    b.Property<string>("Type");
+                    b.Property<string>("Name")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -166,7 +167,8 @@ namespace NeoSchool.Data.Migrations
                     b.Property<int>("MaterialId");
 
                     b.Property<string>("Text")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(500);
 
                     b.HasKey("Id");
 
@@ -262,13 +264,13 @@ namespace NeoSchool.Data.Migrations
 
                     b.Property<string>("AuthorId");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000);
 
                     b.Property<bool>("ForTeachers");
 
-                    b.Property<string>("Name");
-
-                    b.Property<int>("Rating");
+                    b.Property<string>("Name")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Url");
 
@@ -288,7 +290,8 @@ namespace NeoSchool.Data.Migrations
                     b.Property<string>("AuthorId");
 
                     b.Property<string>("Text")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(140);
 
                     b.Property<int>("VideoLessonId");
 
@@ -348,11 +351,11 @@ namespace NeoSchool.Data.Migrations
 
             modelBuilder.Entity("NeoSchool.Models.Discipline", b =>
                 {
-                    b.HasOne("NeoSchool.Models.Material")
+                    b.HasOne("NeoSchool.Models.Material", "Material")
                         .WithMany("Disciplines")
                         .HasForeignKey("MaterialId");
 
-                    b.HasOne("NeoSchool.Models.VideoLesson")
+                    b.HasOne("NeoSchool.Models.VideoLesson", "VideoLesson")
                         .WithMany("Disciplines")
                         .HasForeignKey("VideoLessonId");
                 });

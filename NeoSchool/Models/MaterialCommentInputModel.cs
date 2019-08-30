@@ -12,6 +12,7 @@ namespace NeoSchool.Models
         public long Id { get; set; }
 
         [Required]
+        [StringLength(140, ErrorMessage = "Comment should be between 3 and 140 characters long", MinimumLength = 3)]
         public string Text { get; set; }
 
         public User Author { get; set; }

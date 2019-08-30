@@ -14,13 +14,13 @@ namespace NeoSchool.Models
         }
         public int Id { get; set; }
 
+        [MaxLength(50)]
         public string Name { get; set; }
 
+        [MaxLength(1000)]
         public string Description { get; set; }
 
         public string Url { get; set; }
-
-        public int Rating { get; set; }
 
         public bool ForTeachers { get; set; }
 

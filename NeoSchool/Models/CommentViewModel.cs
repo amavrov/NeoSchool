@@ -11,7 +11,6 @@ namespace NeoSchool.Models
     {
         public long Id { get; set; }
 
-        [Required]
         public string Text { get; set; }
 
         public User Author { get; set; }

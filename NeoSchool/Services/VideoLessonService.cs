@@ -123,7 +123,6 @@ namespace NeoSchool.Services
                 ForTeachers = videoLesson.ForTeachers,
                 Id = videoLesson.Id,
                 Name = videoLesson.Name,
-                Rating = videoLesson.Rating,
                 Url = videoLesson.Url,
                 Comments = comments
 

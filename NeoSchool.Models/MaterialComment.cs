@@ -10,6 +10,7 @@ namespace NeoSchool.Models
         public long Id { get; set; }
 
         [Required]
+        [MaxLength(140)]
         public string Text { get; set; }
 
         public string AuthorId { get; set; }

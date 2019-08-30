@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace NeoSchool.Models
@@ -14,13 +15,12 @@ namespace NeoSchool.Models
 
         public int Id { get; set; }
 
-        public string Type { get; set; }
-
+        [MaxLength(50)]
         public string Name { get; set; }
 
+        [MaxLength(1000)]
         public string Description { get; set; }
 
-        public int Rating { get; set; }
 
         public bool ForTeachers { get; set; }
 

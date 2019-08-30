@@ -16,6 +16,11 @@ namespace NeoSchool.Services
             this.userManager = userManager;
         }
 
+        public List<User> GetAllUsers()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<string> GetUsernameByUserId(string userId)
         {
             var user = await userManager.FindByIdAsync(userId);
