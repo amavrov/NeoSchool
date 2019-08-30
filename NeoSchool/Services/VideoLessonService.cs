@@ -135,7 +135,7 @@ namespace NeoSchool.Services
 
         public List<VideoLessonViewModel> GetAllVideos()
         {
-            var videoList = db.VideoLessons.To<VideoLessonViewModel>().ToList();
+            var videoList = db.VideoLessons.Include(x => x.Disciplines).To<VideoLessonViewModel>().ToList();
 
             #region Old Manual Mapping
             //var videoList = db.VideoLessons

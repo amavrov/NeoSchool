@@ -110,6 +110,7 @@ namespace NeoSchool.Services
 
             var materialList = db.Materials
                 .Include(author => author.Author)
+                .Include(d => d.Disciplines)
                 .ToList()
                 .Select(material =>
                 {

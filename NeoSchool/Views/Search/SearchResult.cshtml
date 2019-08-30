@@ -1,0 +1,25 @@
+﻿@model NeoSchool.Models.SearchModel
+
+@{
+    ViewData["Title"] = "SearchResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Search results:</h2>
+<hr class="mt-3" />
+
+<h4>Video Lessons for the @Model.DisciplineName discipline and @Model.Grade grade:</h4>
+<hr class="mt-3" />
+
+@foreach (var item in Model.VideoIdsAndNames)
+{
+    <a class="h5" href="/VideoLesson/Details/@item.Key">@item.Value</a>
+}
+
+<h3>Materials for the @Model.DisciplineName discipline and @Model.Grade grade:</h3>
+<hr class="mt-3" />
+
+@foreach (var item in Model.MaterialIdsAndNames)
+{
+    <a class="h5" href="/Material/Details/@item.Key">@item.Value</a>
+}

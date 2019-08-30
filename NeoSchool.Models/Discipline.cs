@@ -12,5 +12,9 @@ namespace NeoSchool.Models
 
         public string Grade { get; set; }
 
+        public Material Material { get; set; }
+
+        public VideoLesson VideoLesson { get; set; }
+
     }
 }
