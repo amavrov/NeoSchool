@@ -38,17 +38,13 @@ namespace NeoSchool
                 //This lambda determines whether user consent for non - essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+
             });
 
             services.AddDbContext<NeoSchoolDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            //--------------THIS IS THE DEFAULT USER -------------------
-
-            //services.AddDefaultIdentity<IdentityUser>()
-            //    .AddDefaultUI(UIFramework.Bootstrap4)
-            //    .AddEntityFrameworkStores<NeoSchoolDbContext>();
 
             services.AddIdentity<User, UserRole>()
                     .AddEntityFrameworkStores<NeoSchoolDbContext>()
@@ -69,6 +65,7 @@ namespace NeoSchool
             services.AddTransient<ICloudinaryService, CloudinaryService>();
             services.AddTransient<IDisciplineService, DisciplineService>();
 
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Identity/Account/LogIn");
 
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -78,6 +75,7 @@ namespace NeoSchool
 
             services.Configure<IdentityOptions>(options =>
             {
+                
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
@@ -117,17 +115,10 @@ namespace NeoSchool
 
 
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            app.UseDeveloperExceptionPage();
+            app.UseDatabaseErrorPage();
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -141,8 +132,8 @@ namespace NeoSchool
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                     name: "areas",
-                        template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     name: "default",

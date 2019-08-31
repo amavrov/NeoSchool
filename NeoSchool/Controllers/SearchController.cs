@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NeoSchool.Data;
 using NeoSchool.Models;
@@ -23,12 +24,14 @@ namespace NeoSchool.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult SearchAll()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult SearchAll(SearchModel model)
         {
             var videos = videoLessonService.GetAllVideos();
@@ -59,6 +62,27 @@ namespace NeoSchool.Controllers
                 }
             }
             return this.View("SearchResult", model);
+        }
+
+        [Authorize]
+        public IActionResult GetAllForTeachers()
+        {
+            SearchModel model = new SearchModel();
+
+            var videos = videoLessonService.GetAllVideos().Where(x => x.ForTeachers);
+            var materials = materialService.GetAllMaterials().Where(x => x.ForTeachers);
+
+            foreach (var video in videos)
+            {
+                model.VideoIdsAndNames.Add(new KeyValuePair<string, string>($"{video.Id}", $"{video.Name}"));
+            }
+
+            foreach (var material in materials)
+            {
+                model.MaterialIdsAndNames.Add(new KeyValuePair<string, string>($"{material.Id}", $"{material.Name}"));
+            }
+
+            return View("SearchResult", model);
         }
     }
 }

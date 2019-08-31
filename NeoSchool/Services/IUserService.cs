@@ -1,4 +1,5 @@
-﻿using NeoSchool.Models;
+﻿using NeoSchool.Areas.Administration.Models;
+using NeoSchool.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,9 @@ namespace NeoSchool.Services
     {
         Task<string> GetUsernameByUserId(string userId);
 
-        List<User> GetAllUsers();
+        UserRoleViewModel GetAllUsersAndRoles();
+
+        bool ChangeUserRole(string username, string userRole);
 
     }
 }

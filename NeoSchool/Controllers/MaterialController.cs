@@ -56,6 +56,7 @@ namespace NeoSchool.Controllers
             return this.View(material);
         }
 
+        [Authorize]
         public async Task<IActionResult> CommentCurrentMaterial(MaterialCommentInputModel comment)
         {
             

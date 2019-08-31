@@ -41,6 +41,7 @@ namespace NeoSchool.Controllers
 
         }
 
+        [Authorize]
         public async Task<IActionResult> CommentCurrentVideo(CommentInputModel comment)
         {
             await service.CommentVideo(comment);
