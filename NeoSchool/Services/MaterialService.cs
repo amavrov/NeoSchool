@@ -25,7 +25,7 @@ namespace NeoSchool.Services
             this.disciplineService = disciplineService;
         }
 
-        public string Delete(string VideoId)
+        public Task<string> Delete(string VideoId)
         {
             throw new NotImplementedException();
         }
@@ -37,7 +37,6 @@ namespace NeoSchool.Services
             //TODO: Validate model
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             string fileUrl = await this.cloudinaryService.UploadFileAsync(model.File, model.Name);
-            string type = model.File.FileName.Split('.').LastOrDefault().ToString();
 
             Material material = new Material()
             {
@@ -47,29 +46,28 @@ namespace NeoSchool.Services
                 Name = model.Name,
                 FileLink = fileUrl,
                 MaterialComments = new HashSet<MaterialComment>()
-
             };
 
             if (model.DisciplineName != null && model.Grade != null)
             {
-                var disc = disciplineService.CreateDiscipline(model.DisciplineName, model.Grade);
+                var disc = await disciplineService.CreateDiscipline(model.DisciplineName, model.Grade);
                 material.Disciplines.Add(disc);
             }
 
             db.Materials.Add(material);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             var result = $"You have successfully added the video {model.Name}!";
             return result;
         }
 
-        public MaterialViewModel Details(int materialId)
+        public async Task<MaterialViewModel> Details(int materialId)
         {
-            Material materialFromDb = this.db.Materials
+            Material materialFromDb = await this.db.Materials
                                               .Where(mat => mat.Id == materialId)
                                               .Include(dbMat => dbMat.Author)
                                               .Include(dbMat => dbMat.Disciplines)
-                                              .SingleOrDefault();
+                                              .SingleOrDefaultAsync();
             var commentsFromDb = this.db.MaterialComments.Where(x => x.MaterialId == materialId).Include(x => x.Author).ToHashSet();
 
             var comments = new HashSet<CommentViewModel>();
@@ -104,8 +102,6 @@ namespace NeoSchool.Services
         public List<MaterialViewModel> GetAllMaterials()
         {
 
-            // TODO: add pagination
-
             var materialList = db.Materials
                 .Include(author => author.Author)
                 .Include(d => d.Disciplines)
@@ -128,7 +124,7 @@ namespace NeoSchool.Services
             return materialList;
         }
 
-        public string GetMaterialId()
+        public Task<string> GetMaterialId()
         {
             throw new NotImplementedException();
         }
@@ -149,7 +145,7 @@ namespace NeoSchool.Services
 
             return shortDescription;
         }
-        public string CommentMaterial(MaterialCommentInputModel model)
+        public async Task<string> CommentMaterial(MaterialCommentInputModel model)
         {
             //TODO: Validate model
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -162,7 +158,7 @@ namespace NeoSchool.Services
             };
 
             db.MaterialComments.Add(comment);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             var result = $"You have successfully made a comment!";
             return result;

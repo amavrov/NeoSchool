@@ -26,17 +26,17 @@ namespace NeoSchool.Services
             this.disciplineService = disciplineService;
         }
 
-        public string Delete(string VideoId)
+        public async Task<string> Delete(string VideoId)
         {
             throw new NotImplementedException();
         }
 
-        public VideoLessonViewModel GetVideoById(string videoId)
+        public async Task<VideoLessonViewModel> GetVideoById(string videoId)
         {
             throw new NotImplementedException();
         }
 
-        public string Create(VideoLessonInputModel model)
+        public async Task<string> Create(VideoLessonInputModel model)
         {
             //TODO: Validate model
             VideoLesson video = Mapper.Map<VideoLesson>(model);
@@ -45,7 +45,7 @@ namespace NeoSchool.Services
 
             if (model.DisciplineName != null && model.Grade != null)
             {
-                var disc = disciplineService.CreateDiscipline(model.DisciplineName, model.Grade);
+                var disc = await disciplineService.CreateDiscipline(model.DisciplineName, model.Grade);
                 video.Disciplines.Add(disc);
             }
 
@@ -65,17 +65,17 @@ namespace NeoSchool.Services
             #endregion
 
             db.VideoLessons.Add(video);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             var result = $"You have successfully added the video {model.Name}!";
             return result;
         }
 
-        public string CommentVideo(CommentInputModel model)
+        public async Task<string> CommentVideo(CommentInputModel model)
         {
             //TODO: Validate model
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            User author = db.Users.FirstOrDefault(x => x.Id == userId);
+            User author = await db.Users.FirstOrDefaultAsync(x => x.Id == userId);
 
             VideoLessonComment comment = new VideoLessonComment()
             {
@@ -86,21 +86,21 @@ namespace NeoSchool.Services
             };
 
             db.VideoLessonComments.Add(comment);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             var result = $"You have successfully made a comment!";
             return result;
         }
 
-        public VideoLessonViewModel Details(int videoId)
+        public async Task<VideoLessonViewModel> Details(int videoId)
         {
             var commentsFromDb = this.db.VideoLessonComments.Where(x => x.VideoLessonId == videoId).Include(x => x.Author).ToHashSet();
 
-            VideoLesson videoLesson = this.db.VideoLessons
+            VideoLesson videoLesson = await this.db.VideoLessons
                                               .Where(DbVideo => DbVideo.Id == videoId)
                                               .Include(DbVideo => DbVideo.Author)
                                               .Include(DbVideo => DbVideo.Disciplines)
-                                              .SingleOrDefault();
+                                              .SingleOrDefaultAsync();
 
             var comments = new HashSet<CommentViewModel>();
 

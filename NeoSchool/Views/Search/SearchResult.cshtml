@@ -13,8 +13,7 @@
 <ul>
     @foreach (var item in Model.VideoIdsAndNames)
     {
-    <li><a class="h5" href="/VideoLesson/VideoDetails/@item.Key">@item.Value</a></li>
-        <br />
+    <li><a class="h5 mt-2" href="/VideoLesson/VideoDetails/@item.Key">@item.Value</a></li>
     }
 </ul>
 <h4 class="mt-5">Materials for the @Model.DisciplineName discipline and @Model.Grade grade:</h4>
@@ -22,6 +21,6 @@
 <ul>
     @foreach (var item in Model.MaterialIdsAndNames)
     {
-    <li><a class="h5" href="/Material/MaterialDetails/@item.Key">@item.Value</a> </li>
+    <li><a class="h5 mt-2" href="/Material/MaterialDetails/@item.Key">@item.Value</a> </li>
     }
 </ul>

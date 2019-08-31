@@ -8,13 +8,11 @@ namespace NeoSchool.Services
 {
     public interface IDisciplineService
     {
-        Discipline CreateDiscipline(string disciplineName, string grade);
 
-        void AddDisciplineTo(Material material);
-
-        void AddDisciplineTo(VideoLesson videoLesson);
-
-        Discipline ReturnDisciplineOrNull(string disciplineName, string grade);
+        Task AddDisciplineTo(Discipline dicipline, Material material);
+        Task AddDisciplineTo(Discipline dicipline, VideoLesson videoLesson);
+        Task<Discipline> CreateDiscipline(string disciplineName, string grade);
+        Task<Discipline> ReturnDisciplineOrNull(string disciplineName, string grade);
 
     }
 }

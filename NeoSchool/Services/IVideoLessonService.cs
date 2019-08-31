@@ -8,22 +8,22 @@ namespace NeoSchool.Services
 {
     public interface IVideoLessonService
     {
-        string Create(VideoLessonInputModel model);
+        Task<string> Create(VideoLessonInputModel model);
 
         List<VideoLessonViewModel> GetAllVideos();
 
-        string Delete(string VideoId);
+        Task <string> Delete(string VideoId);
 
-        VideoLessonViewModel GetVideoById(string videoId);
+        Task <VideoLessonViewModel> GetVideoById(string videoId);
 
         string GetEmbeddingUrl(string url);
 
 
-        VideoLessonViewModel Details(int videoId);
+        Task <VideoLessonViewModel> Details(int videoId);
 
         string GetShortDescription(string fullDescription);
 
-        string CommentVideo(CommentInputModel model);
+        Task <string> CommentVideo(CommentInputModel model);
 
 
     }

@@ -27,7 +27,7 @@ namespace NeoSchool.Controllers
 
         [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
-        public IActionResult Create(VideoLessonInputModel model)
+        public async Task<IActionResult> Create(VideoLessonInputModel model)
         {
             if (!this.ModelState.IsValid)
             {
@@ -35,15 +35,15 @@ namespace NeoSchool.Controllers
             }
             
 
-            service.Create(model);            
+            await service.Create(model);            
 
             return this.Redirect("/VideoLesson/ViewAll");
 
         }
 
-        public IActionResult CommentCurrentVideo(CommentInputModel comment)
+        public async Task<IActionResult> CommentCurrentVideo(CommentInputModel comment)
         {
-            service.CommentVideo(comment);
+            await service.CommentVideo(comment);
 
             return Redirect("/VideoLesson/VideoDetails/" + comment.VideoLessonId.ToString());
         }
@@ -56,10 +56,10 @@ namespace NeoSchool.Controllers
         }
 
         [Authorize]
-        public IActionResult VideoDetails(int videoId)
+        public async Task<IActionResult> VideoDetails(int videoId)
         {
             int vidId = int.Parse(this.Request.Path.ToString().Split('/').LastOrDefault());
-            VideoLessonViewModel video = service.Details(vidId);
+            VideoLessonViewModel video = await service.Details(vidId);
             return this.View(video);
         }
 

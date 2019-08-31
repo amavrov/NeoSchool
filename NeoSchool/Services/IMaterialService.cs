@@ -12,14 +12,14 @@ namespace NeoSchool.Services
 
         List<MaterialViewModel> GetAllMaterials();
 
-        string Delete(string materialId);
+        Task<string> Delete(string materialId);
 
-        string GetMaterialId();
+        Task<string> GetMaterialId();
 
-        MaterialViewModel Details(int materialId);
+        Task<MaterialViewModel> Details(int materialId);
 
         string GetShortDescription(string fullDescription);
-        string CommentMaterial(MaterialCommentInputModel model);
+        Task<string> CommentMaterial(MaterialCommentInputModel model);
 
 
     }

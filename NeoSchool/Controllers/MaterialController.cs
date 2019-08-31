@@ -41,25 +41,7 @@ namespace NeoSchool.Controllers
             return this.Redirect("/Material/ViewAll");
 
         }
-        //
 
-        //[HttpPost]
-        //public async Task<IActionResult> Create(MaterialInputModel model)
-        //{
-
-        //    string pictureUrl = await this.cloudinaryService.UploadFileAsync(
-        //        model.File,
-        //        model.Name);
-
-        //    ProductServiceModel productServiceModel = AutoMapper.Mapper.Map<ProductServiceModel>(productCreateInputModel);
-
-        //    productServiceModel.Picture = pictureUrl;
-
-        //    await this.productService.Create(productServiceModel);
-
-        //    return this.Redirect("/");
-        //}
-        //
         [Authorize]
         public IActionResult ViewAll()
         {
@@ -67,17 +49,17 @@ namespace NeoSchool.Controllers
         }
 
         [Authorize]
-        public IActionResult MaterialDetails(int materialId)
+        public async Task<IActionResult> MaterialDetails(int materialId)
         {
             int matId = int.Parse(this.Request.Path.ToString().Split('/').LastOrDefault());
-            MaterialViewModel material = service.Details(matId);
+            MaterialViewModel material = await service.Details(matId);
             return this.View(material);
         }
 
-        public IActionResult CommentCurrentMaterial(MaterialCommentInputModel comment)
+        public async Task<IActionResult> CommentCurrentMaterial(MaterialCommentInputModel comment)
         {
             
-            service.CommentMaterial(comment);
+            await service.CommentMaterial(comment);
 
             return Redirect("/Material/MaterialDetails/" + comment.MaterialId.ToString());
         }
